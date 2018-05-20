@@ -1,39 +1,12 @@
-<app-header></app-header>
-
-<div class="container">
-  <div class="row">
-    <div class="col-sm-12">
-      <div class="card with-nav-tabs">
-        <div class="card-header">
-          <ul class="nav nav-tabs card-header-tabs" style="margin-top: 1em;">
-            <li class="nav-item" [routerLinkActive]="['active']">
-              <a class="nav-link" routerLink="users">Kategorije</a>
-            </li>
-            <li class="nav-item" [routerLinkActive]="['active']">
-              <a class="nav-link" routerLink="users">Tipovi</a>
-            </li>
-            <li class="nav-item" [routerLinkActive]="['active']">
-              <a class="nav-link" routerLink="users">Dodatne usluge</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                Korisnici
-                <span class="caret"></span>
-              </a>
-              <ul class="dropdown-menu">
-                <a class="dropdown-item" [routerLinkActive]="['active']" routerLink="locations/storages">Obicni korisnici</a>
-                <a class="dropdown-item" [routerLinkActive]="['active']" routerLink="locations/shops">Agenti</a>
-                <a class="dropdown-item" [routerLinkActive]="['active']" routerLink="locations/shops">Utisci korisnika</a>
-              </ul>
-            </li>
-          </ul>
-        </div>
-        <div class="card-body">
-          <div class="tab-content">
-            <router-outlet></router-outlet>
-          </div>
-        </div>
+<div style="text-align:center">
+    <app-header></app-header>
+  </div>
+  
+  <br/> <br/>
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <router-outlet></router-outlet>
       </div>
     </div>
   </div>
-</div>
