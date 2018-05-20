@@ -1,0 +1,37 @@
+<div class="conteiner">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="panel with-nav-tabs panel-default">
+        <div class="panel-heading tabbable full-width-tabs">
+          <ul class="nav nav-tabs list-inline" style="margin-top: 1em;">
+            <li class="nav-item active" [routerLinkActive]="['active']">
+              <a class="nav-link" routerLink="category">Kategorije</a>
+            </li>
+            <li class="nav-item" [routerLinkActive]="['active']">
+              <a class="nav-link" routerLink="type">Tipovi</a>
+            </li>
+            <li class="nav-item" [routerLinkActive]="['active']">
+              <a class="nav-link" routerLink="additionalService">Dodatne usluge</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                Korisnici
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu ">
+                <a class="dropdown-item" [routerLinkActive]="['active']" routerLink="users">Obicni korisnici</a>
+                <a class="dropdown-item" [routerLinkActive]="['active']" routerLink="agents">Agenti</a>
+                <a class="dropdown-item" [routerLinkActive]="['active']" routerLink="impression">Utisci korisnika</a>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div class="panel-body">
+          <div class="tab-content">
+            <router-outlet></router-outlet>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
