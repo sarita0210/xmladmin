@@ -11,7 +11,7 @@ import {RegisterResponse} from '../models/register-response.model';
 
 @Injectable()
 export class AuthService {
-  baseUrl = 'http://localhost:8080/';
+  baseUrl = 'http://localhost:8085/';
   apiUrl = 'api/users/';
   public authResponse: AuthResponse;
   constructor(private http: HttpClient, private router: Router) { }

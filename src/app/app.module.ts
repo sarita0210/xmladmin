@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing/app-routing.module';
 
 import { AppComponent } from './app.component';
@@ -18,6 +19,7 @@ import { AdminPanelComponent } from './components/admin-panel/admin-panel.compon
 import { AgentComponent } from './components/agent/agent.component';
 import { ImpressionComponent } from './components/impression/impression.component';
 import { UserComponent } from './components/user/user.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -36,7 +38,9 @@ import { UserComponent } from './components/user/user.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule
   ],
   providers: [AuthService, 
               CategoryEntityService,
