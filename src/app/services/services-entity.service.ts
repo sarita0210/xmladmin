@@ -7,8 +7,8 @@ import {AuthService} from './auth.service';
 @Injectable()
 export class ServicesEntityService extends EntityService<ServicesModel, number> {
 
-  constructor(protected http: HttpClient, protected authService: AuthService) {
-    super(http, 'additionalservices', authService);
+  constructor(http: HttpClient, protected authService: AuthService) {
+    super(http, '/additionalservices', authService);
   }
 
 }

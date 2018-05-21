@@ -7,8 +7,8 @@ import {HttpClient} from '@angular/common/http';
 @Injectable()
 export class TypeEntityService extends EntityService<TypeModel, number> {
 
-  constructor(protected http: HttpClient, protected authService: AuthService) {
-    super(http, 'type', authService);
+  constructor(http: HttpClient, protected authService: AuthService) {
+    super(http, '/type', authService);
   }
 
 }

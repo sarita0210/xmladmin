@@ -10,7 +10,7 @@ import { Pagination } from '../pagination';
   styleUrls: ['./category.component.css']
 })
 export class CategoryComponent extends Pagination<CategoryModel> implements OnInit {
-  name = 'asdf';
+  name = '';
   @ViewChild('addForm') form: NgForm;
   @ViewChild('editForm') eForm: NgForm;
   constructor(public categoryService: CategoryEntityService) {
@@ -59,5 +59,5 @@ editCategory(index) {
         this.message = JSON.stringify(error);
       }
     );
-}
+  }
 }

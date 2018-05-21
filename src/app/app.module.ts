@@ -20,6 +20,8 @@ import { AgentComponent } from './components/agent/agent.component';
 import { ImpressionComponent } from './components/impression/impression.component';
 import { UserComponent } from './components/user/user.component';
 import { FormsModule } from '@angular/forms';
+import { AgentService } from './services/agent.service';
+import { UserService } from './services/user.service';
 
 
 @NgModule({
@@ -46,7 +48,9 @@ import { FormsModule } from '@angular/forms';
               CategoryEntityService,
               EntityService,
               ServicesEntityService,
-              TypeEntityService],
+              TypeEntityService,
+              AgentService,
+              UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

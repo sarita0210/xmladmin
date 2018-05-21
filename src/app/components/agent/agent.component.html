@@ -1,3 +1,133 @@
-<p>
-  agent works!
-</p>
+<h1 class="page-header">
+  Registrovani agenti
+  <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#addAgent">
+    <i class="fa fa-plus"></i>Add agent</button>
+</h1>
+<hr/>
+
+<div class="table-responsive">
+  <table class="table table-sm table-striped table-bordered">
+    <thead class="thead-light">
+      <tr class="d-xl-flex">
+        <th class="col-1">#</th>
+        <th class="col-1">First name</th>
+        <th class="col-1">Last name</th>
+        <th class="col-2">Email</th>
+        <th class="col-1">Username</th>
+        <th class="col-1">Reg date</th>
+        <th class="col-1">Verified</th>
+        <th class="col-1">PIB</th>
+        <th class="col-1">&nbsp;</th>
+        <th class="col-1">&nbsp;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="d-flex" *ngFor="let agent of pageset.content; let i = index">
+        <td class="col-1">{{agent.id}}</td>
+        <td class="col-1">
+          <b>{{ agent.firstName }}</b>
+        </td>
+        <td class="col-1">
+          <b>{{ agent.lastName }}</b>
+        </td>
+        <td class="col-2">
+          <b>{{ agent.email }}</b>
+        </td>
+        <td class="col-1">
+          <b>{{ agent.username }}</b>
+        </td>
+        <td class="col-1">
+          <b>{{ agent.registrationDate }}</b>
+        </td>
+        <td class="col-1">
+          <b>{{ agent.verified }}</b>
+        </td>
+        <td class="col-1">
+          <b>{{ agent.pib }}</b>
+        </td>
+        <td class="col-2">
+          <button class="btn btn-success" (click)="fillField(agent)" data-toggle="modal" data-target="#editAgent">
+            Edit agent </button>
+        </td>
+        <td class="col-2">
+          <button class="btn btn-danger" (click)="deleteAgent(agent.id)">
+            Delete agent</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<nav>
+  <ul class="pagination pagination-sm justify-content-center" *ngIf="pageset.totalPages > 0">
+    <li class="page-item">
+      <a class="page-link" *ngIf="!pageset.first" (click)="search(0)">
+        <<</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" *ngIf="!pageset.first" (click)="search(page-1)">
+        <</a>
+    </li>
+    <li *ngFor="let n of range()" [ngClass]="{'page-item': true}">
+      <a [ngClass]="{'page-link': true, 'active': n == page}" (click)="search(n)" *ngIf="n != page">{{n+1}}</a>
+      <span [ngClass]="{'page-link': true, 'active': n == page}" *ngIf="n == page">{{n+1}}</span>
+    </li>
+    <li class="page-item">
+      <a class="page-link" *ngIf="!pageset.last" (click)="search(pagePlus(1))">></a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" *ngIf="!pageset.last" (click)="search(pagesCount - 1)">>></a>
+    </li>
+  </ul>
+</nav>
+
+
+<!--MODALNI ZA DODAVANJE KATEGORIJE -->
+<div id="addAgent" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <form class="form-horizontal" #addForm="ngForm" (submit)="addAgent()">
+          <div class="form-group">
+            <label for="name" class="col-sm-2 control-label"> First name: </label>
+            <div class="col-sm-10">
+              <input type="text" ngModel #firstName="ngModel" name="firstName" class="form-control" id="firstName">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-10">
+              <label for="name" class="col-sm-3 control-label"> Last name: </label>
+
+              <input type="text" ngModel #lastName="ngModel" name="lastName" class="form-control" id="lastName">
+            </div>
+          </div>
+
+          <input type="submit" class="btn btn-primary" value="Add " />
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODALNI ZA EDIT KATEGORIJE -->
+<div id="editCategory" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <form class="form-horizontal" #editForm="ngForm" (ngSubmit)="editCategory(selected)">
+
+          <div class="form-group">
+            <label for="name" class="col-sm-2 control-label"> Name: </label>
+            <div class="col-sm-10">
+              <input type="text" ngModel #name="ngModel" name="name" class="form-control" id="name">
+            </div>
+          </div>
+          <div class="form-group">
+            <input type="submit" class="btn btn-primary" value="Edit category" />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
