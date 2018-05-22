@@ -33,7 +33,7 @@ export class CategoryComponent extends Pagination<CategoryModel> implements OnIn
     );
   }
   deleteCategory(index) {
-    console.log('delete category');
+    console.log('delete category' + index);
     this.categoryService.delete(index).subscribe(
       resp => {
         console.log(resp);
