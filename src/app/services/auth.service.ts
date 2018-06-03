@@ -7,14 +7,21 @@ import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import {RegisterResponse} from '../models/register-response.model';
+import { Token } from '../models/token';
+import { Subject } from 'rxjs/Subject';
+import { AuthenticationRequest } from '../models/authentication-request';
 
 
 @Injectable()
 export class AuthService {
+  private logger = new Subject<boolean>();
   baseUrl = 'http://localhost:8085/';
   apiUrl = 'api/users/';
+  loggedUserToken: Token;
   public authResponse: AuthResponse;
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router) { 
+    this.loggedUserToken = new Token('', '', '', 0, '');
+  }
 
   getToken() {
     this.authResponse = JSON.parse(window.localStorage.getItem('currentUser'));
@@ -50,15 +57,22 @@ export class AuthService {
     return nowUTC < expiresDate;
   }
   logout() {
-    this.authResponse = null;
-    window.localStorage.removeItem('currentUser');
-    this.router.navigate(['/login']);
+    window.localStorage.clear();
+    this.loggedUserToken = null;
+    this.router.navigate(['/home']);
+    this.logger.next(false);
   }
-  login(username: string, password: string) {
-    const formData: FormData = new FormData();
+  login(loginInfo: AuthenticationRequest) {
+    return this.http.post(this.baseUrl + 'api/auth/login', loginInfo)
+    .map(ret => {
+      this.loggedUserToken =  new Token(ret['roles'], ret['privileges'], loginInfo.username, ret['id'], ret['token']);
+      this.storeToken();
+      this.logger.next(true);
+    });
+  //  const formData: FormData = new FormData();
     // const body = `username=$username}&password=${password}&`;
-    return this.http.post(this.baseUrl + this.apiUrl + 'token', {username: username, password: password})
-      .map(res => res as AuthResponse || {}).catch(this.handleError);
+   // return this.http.post(this.baseUrl + this.apiUrl + 'token', {username: username, password: password})
+  //    .map(res => res as AuthResponse || {}).catch(this.handleError);
   }
   hasRole(role: string): boolean {
     if (this.getRole() == null) {
@@ -102,6 +116,10 @@ export class AuthService {
       errMsg = error.message ? error.message : error.toString();
     }
     return Observable.throw(errMsg);
+  }
+
+  isLoggedInSimple(): boolean {
+    return this.getToken() !== null;
   }
 
 }
