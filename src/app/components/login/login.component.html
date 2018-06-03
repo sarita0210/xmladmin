@@ -1,0 +1,41 @@
+<h1 align="center">
+  Log in with your information
+</h1>
+
+<div *ngIf="error !== undefined">
+  <div class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close" >
+      <span aria-hidden="true">&times;</span></button>
+      <strong>{{error}}</strong>
+  </div>
+</div>
+
+<div align="center">
+  <form class="form-horizontal" #f="ngForm">
+      <div class="form-group">
+        <label for="username" class="col-2 control-label"> Username: </label>
+        <div class="col-10">
+          <input type="text" class="form-control"
+                  name="username" [(ngModel)]="user" required #username="ngModel" minlength="2">
+        </div>
+        <div [hidden]="(username.untouched && username.pristine) || username.valid"
+             class="alert alert-danger">Field required</div>
+      </div>
+
+      <div class="form-group">
+        <label for="password" class="col-2 control-label"> Password: </label>
+        <div class="col-10">
+          <input type="password" class="form-control"
+                  name="password" [(ngModel)]="pass" required #password="ngModel">
+        </div>
+        <div [hidden]="(password.untouched && password.pristine) || password.valid"
+             class="alert alert-danger">Field required</div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-10">
+          <button type="button" class="btn btn-primary" (click)="login()" [disabled]="!f.valid">Login</button>
+        </div>
+      </div>
+  </form>
+</div>

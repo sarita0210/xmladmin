@@ -13,6 +13,7 @@ export class AdditionalServiceComponent extends Pagination<ServicesModel> implem
   name = '';
   @ViewChild('addForm') form: NgForm;
   @ViewChild('editForm') eForm: NgForm;
+  selected : ServicesModel;
   constructor(public servicesEntityService: ServicesEntityService) { 
     super(servicesEntityService);
   }
@@ -26,34 +27,29 @@ export class AdditionalServiceComponent extends Pagination<ServicesModel> implem
     const dir : ServicesModel = new ServicesModel( 0, this.form.value['name']);
     this.servicesEntityService.insert(dir).subscribe(
       resp => {
-        console.log(resp);
+        this.pageset.content.push(resp);
       }, error => {
         this.error = JSON.stringify(error);
       }
     );
   }
-  deleteType(index) {
-    console.log('delete service');
-    this.servicesEntityService.delete(index).subscribe(
+  deleteService(id, index) {
+    this.servicesEntityService.delete(id).subscribe(
       resp => {
-        console.log(resp);
+        this.pageset.content.splice(index, 1);
       }, error => {
         this.message = JSON.stringify(error);
       }
     );
   }
-  fillField(selected){
-    console.log('aaaaaaaaaaa' + selected + selected.name);
-    this.name = selected.name;
+  fillField(selected: ServicesModel){
+    this.eForm.controls['name'].setValue(selected.serviceName);
+    this.selected = selected;
   }
-  editService(index) {
-    console.log('edit serice');
-      console.log('broj indexa je : ' + index);
-      const serviceUpdate : ServicesModel = new ServicesModel(index, this.eForm.value['name'],);
-      this.servicesEntityService.update(serviceUpdate).subscribe(
+  editService() {
+    this.selected.serviceName = this.eForm.controls['name'].value;
+    this.servicesEntityService.update(this.selected).subscribe(
         resp => {
-    //  const idx = this.cinemas.map(cin => cin.id).findIndex(id => id === resp.id);
-    //  this.cinemas[idx] = resp;
           console.log(resp);
         }, error => {
           this.message = JSON.stringify(error);

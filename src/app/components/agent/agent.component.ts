@@ -18,6 +18,7 @@ export class AgentComponent extends Pagination<AgentUserModel>  implements OnIni
   registrationDate = '';
   verified = false;
   pib = '';
+  selected: AgentUserModel;
   @ViewChild('addForm') form: NgForm;
   @ViewChild('editForm') eForm: NgForm;
 
@@ -31,15 +32,67 @@ export class AgentComponent extends Pagination<AgentUserModel>  implements OnIni
   }
 
   addAgent() {
-    const dir : AgentUserModel = new AgentUserModel( 0, this.form.value['firstName'],  this.form.value['lastName'],
-    this.form.value['email'],   this.form.value['username'],  null , this.verified ,  this.form.value['pib']);
+    const dir : AgentUserModel = new AgentUserModel(0, this.form.value['firstName'],  this.form.value['lastName'],
+    this.form.value['email'],   this.form.value['username'],  null , this.verified ,  this.form.value['pib'], this.form.value['password']);
     this.agentService.insert(dir).subscribe(
       resp => {
-        console.log(resp);
+        this.pageset.content.push(resp);
+      }, error => {
+        this.error = JSON.stringify(error);
+      }
+    );
+  }
+  blockAgent(agent: AgentUserModel) {
+    agent.blocked = true;
+    this.agentService.update(agent).subscribe(
+      resp => {
+        this.pageset.content.find(a => a.id === agent.id).blocked = true;
+      }, error => {
+        this.error = JSON.stringify(error);
+      }
+    );
+  }
+  unblockAgent(agent: AgentUserModel) {
+    agent.blocked = false;
+    this.agentService.update(agent).subscribe(
+      resp => {
+        this.pageset.content.find(a => a.id === agent.id).blocked = false;
       }, error => {
         this.error = JSON.stringify(error);
       }
     );
   }
 
+  deleteAgent(id, index) {
+    this.agentService.delete(id).subscribe(
+      resp => {
+        this.pageset.content.splice(index, 1);
+      }, error => {
+        this.message = JSON.stringify(error);
+      }
+    );
+  }
+
+  fillField(selected: AgentUserModel) {
+    this.eForm.controls['firstName'].setValue(selected.firstName);
+    this.eForm.controls['lastName'].setValue(selected.lastName);
+    this.eForm.controls['email'].setValue(selected.email);
+    this.eForm.controls['username'].setValue(selected.username);
+    this.eForm.controls['pib'].setValue(selected.pib);
+    this.selected = selected;
+  }
+  editAgent() {
+    this.selected.firstName = this.eForm.controls['firstName'].value;
+    this.selected.lastName = this.eForm.controls['lastName'].value;
+    this.selected.email = this.eForm.controls['email'].value;
+    this.selected.username = this.eForm.controls['username'].value;
+    this.selected.pib = this.eForm.controls['pib'].value;
+    this.agentService.update(this.selected).subscribe(
+      resp => {
+        this.selected = resp;
+      }, error => {
+        this.error = JSON.stringify(error);
+      }
+    );
+  }
 }

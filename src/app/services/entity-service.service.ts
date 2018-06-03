@@ -30,8 +30,7 @@ export class EntityService <Entity, Key> {
   delete(id: Key): Observable<any> {
     let params = new HttpParams();
     params = params.append('id', id.toString());
-    console.log("hhhhh" + params)
-    return this.http.delete(this.actionUrl + '/delete?'+ params , {headers: this.authService.getJSONAuthHeader()} ).map(resp => resp as Entity);
+    return this.http.delete(this.actionUrl + '/delete', {params: params} ).map(resp => resp as Entity);
   }
   update(toUpdate: any): Observable<any> {
     return this.http.put(this.actionUrl + '/update/', toUpdate);

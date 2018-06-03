@@ -13,7 +13,7 @@ export class TypeComponent extends Pagination<TypeModel> implements OnInit {
   name = '';
   @ViewChild('addForm') form: NgForm;
   @ViewChild('editForm') eForm: NgForm;
-
+  selected: TypeModel;
   constructor(public typeService: TypeEntityService) {
     super(typeService);
    }
@@ -27,17 +27,16 @@ export class TypeComponent extends Pagination<TypeModel> implements OnInit {
     const dir : TypeModel = new TypeModel( 0, this.form.value['name']);
     this.typeService.insert(dir).subscribe(
       resp => {
-        console.log(resp);
+        this.pageset.content.push(resp);
       }, error => {
         this.error = JSON.stringify(error);
       }
     );
   }
-  deleteType(index) {
-    console.log('delete type');
-    this.typeService.delete(index).subscribe(
+  deleteType(id, index) {
+    this.typeService.delete(id).subscribe(
       resp => {
-        console.log(resp);
+        this.pageset.content.splice(index, 1);
       }, error => {
         this.message = JSON.stringify(error);
       }
@@ -45,16 +44,13 @@ export class TypeComponent extends Pagination<TypeModel> implements OnInit {
   }
   fillField(selected){
     console.log('aaaaaaaaaaa' + selected + selected.name);
-    this.name = selected.name;
+    this.eForm.controls['name'].setValue(selected.name);
+    this.selected = selected;
   }
   editType(index) {
-    console.log('edit type');
-      console.log('broj indexa je : ' + index);
-      const typeUpdate : TypeModel = new TypeModel(index, this.eForm.value['name'],);
-      this.typeService.update(typeUpdate).subscribe(
+    this.selected.name = this.eForm.controls['name'].value;
+    this.typeService.update(this.selected).subscribe(
         resp => {
-    //  const idx = this.cinemas.map(cin => cin.id).findIndex(id => id === resp.id);
-    //  this.cinemas[idx] = resp;
           console.log(resp);
         }, error => {
           this.message = JSON.stringify(error);

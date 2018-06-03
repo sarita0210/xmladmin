@@ -4,5 +4,6 @@ export class UserModel {
               public lastName: string,
               public email: string,
               public username: string,
-              public registrationDate: Date) {}
+              public registrationDate: Date,
+              public blocked: boolean) {}
 }

@@ -13,6 +13,7 @@ export class CategoryComponent extends Pagination<CategoryModel> implements OnIn
   name = '';
   @ViewChild('addForm') form: NgForm;
   @ViewChild('editForm') eForm: NgForm;
+  selected: CategoryModel;
   constructor(public categoryService: CategoryEntityService) {
     super(categoryService);
   }
@@ -23,37 +24,35 @@ export class CategoryComponent extends Pagination<CategoryModel> implements OnIn
   }
 
   addCategory() {
-    const dir : CategoryModel = new CategoryModel( 0, this.form.value['name']);
+    const dir: CategoryModel = new CategoryModel(0, this.form.value['name']);
     this.categoryService.insert(dir).subscribe(
       resp => {
-        console.log(resp);
+        this.pageset.content.push(resp);
       }, error => {
         this.error = JSON.stringify(error);
       }
     );
   }
-  deleteCategory(index) {
-    console.log('delete category' + index);
-    this.categoryService.delete(index).subscribe(
+  deleteCategory(id, index) {
+    this.categoryService.delete(id).subscribe(
       resp => {
-        console.log(resp);
+        this.pageset.content.splice(index, 1);
       }, error => {
         this.message = JSON.stringify(error);
       }
     );
   }
-  fillField(selected){
+  fillField(selected) {
     console.log('aaaaaaaaaaa' + selected + selected.name);
-    this.name = selected.name;
+    this.eForm.controls['name'].setValue(selected.name);
+    this.selected = selected;
   }
-editCategory(index) {
-  console.log('edit category');
-    console.log('broj indexa je : ' + index);
-    const catUpdate : CategoryModel = new CategoryModel(index, this.eForm.value['name'],);
-    this.categoryService.update(catUpdate).subscribe(
+  editCategory() {
+    this.selected.name = this.eForm.controls['name'].value;
+    this.categoryService.update(this.selected).subscribe(
       resp => {
-  //  const idx = this.cinemas.map(cin => cin.id).findIndex(id => id === resp.id);
-  //  this.cinemas[idx] = resp;
+        //  const idx = this.cinemas.map(cin => cin.id).findIndex(id => id === resp.id);
+        //  this.cinemas[idx] = resp;
         console.log(resp);
       }, error => {
         this.message = JSON.stringify(error);

@@ -8,6 +8,7 @@ import { AdditionalServiceComponent } from '../components/additional-service/add
 import { UserComponent } from '../components/user/user.component';
 import { AgentComponent } from '../components/agent/agent.component';
 import { ImpressionComponent } from '../components/impression/impression.component';
+import { LoginComponent } from '../components/login/login.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent},
@@ -19,6 +20,7 @@ const routes: Routes = [
     { path: 'agents', component: AgentComponent},
     { path: 'impression', component: ImpressionComponent}
   ]},
+  { path: 'login', component: LoginComponent},
 ];
 
 @NgModule({

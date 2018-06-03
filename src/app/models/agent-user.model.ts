@@ -7,8 +7,9 @@ export class AgentUserModel extends UserModel {
               public email: string,
               public username: string,
               public registrationDate: Date,
-              public verified: boolean,
-              public pib: string) {
-    super(id, firstName, lastName, email, username, registrationDate);
+              public blocked: boolean,
+              public pib: string,
+              public password: string) {
+    super(id, firstName, lastName, email, username, registrationDate, blocked);
   }
 }

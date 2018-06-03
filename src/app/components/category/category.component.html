@@ -26,7 +26,7 @@
             Edit category </button>
         </td>
         <td class="col-2">
-          <button class="btn btn-danger" (click)="deleteCategory(cat.id)">
+          <button class="btn btn-danger" (click)="deleteCategory(cat.id, i)">
             Delete category</button>
         </td>
       </tr>
@@ -82,7 +82,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-body">
-        <form class="form-horizontal" #editForm="ngForm" (ngSubmit)="editCategory(selected)">
+        <form class="form-horizontal" #editForm="ngForm" (ngSubmit)="editCategory()">
 
           <div class="form-group">
             <label for="name" class="col-sm-2 control-label"> Name: </label>

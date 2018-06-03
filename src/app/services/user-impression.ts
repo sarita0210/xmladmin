@@ -6,12 +6,13 @@ import { UserModel } from "../models/user.model";
 import { EntityService } from "./entity-service.service";
 import { Page } from "../models/page.model";
 import {Observable} from 'rxjs/Observable';
+import { UserImpressionModel } from "../models/user-impression.model";
 
 
 @Injectable()
-export class UserService extends EntityService<UserModel, number>  {
+export class UserImpressionService extends EntityService<UserImpressionModel, number>  {
 
   constructor(http: HttpClient, protected authService: AuthService) {
-    super(http, '/regularuser', authService);
+    super(http, '/userimpression', authService);
   }
 }

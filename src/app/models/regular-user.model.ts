@@ -8,6 +8,6 @@ export class RegularUserModel extends UserModel {
               public registrationDate: Date,
               public blocked: boolean,
               public userImpression: Array<UserImpressionModel>) {
-    super(id, firstName, lastName, email, username, registrationDate);
+    super(id, firstName, lastName, email, username, registrationDate, blocked);
   }
 }
