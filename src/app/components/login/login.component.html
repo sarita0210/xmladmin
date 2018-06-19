@@ -16,7 +16,7 @@
         <label for="username" class="col-2 control-label"> Username: </label>
         <div class="col-10">
           <input type="text" class="form-control"
-                  name="username" [(ngModel)]="user" required #username="ngModel" minlength="2">
+                  name="username" ngModel required #username="ngModel" minlength="2">
         </div>
         <div [hidden]="(username.untouched && username.pristine) || username.valid"
              class="alert alert-danger">Field required</div>
@@ -26,7 +26,7 @@
         <label for="password" class="col-2 control-label"> Password: </label>
         <div class="col-10">
           <input type="password" class="form-control"
-                  name="password" [(ngModel)]="pass" required #password="ngModel">
+                  name="password" ngModel required #password="ngModel">
         </div>
         <div [hidden]="(password.untouched && password.pristine) || password.valid"
              class="alert alert-danger">Field required</div>

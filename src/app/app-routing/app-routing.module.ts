@@ -9,10 +9,11 @@ import { UserComponent } from '../components/user/user.component';
 import { AgentComponent } from '../components/agent/agent.component';
 import { ImpressionComponent } from '../components/impression/impression.component';
 import { LoginComponent } from '../components/login/login.component';
+import { GuardService } from '../services/guard.service';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent},
-  { path: 'adminPanel', component: AdminPanelComponent, children: [
+  { path: 'adminPanel', component: AdminPanelComponent, canActivate: [GuardService], children: [
     { path: 'category', component: CategoryComponent},
     { path: 'type', component: TypeComponent},
     { path: 'additionalService', component: AdditionalServiceComponent},

@@ -24,6 +24,7 @@ import { AgentService } from './services/agent.service';
 import { UserService } from './services/user.service';
 import { UserImpressionService } from './services/user-impression';
 import { LoginComponent } from './components/login/login.component';
+import { GuardService } from './services/guard.service';
 
 
 @NgModule({
@@ -54,6 +55,7 @@ import { LoginComponent } from './components/login/login.component';
               TypeEntityService,
               AgentService,
               UserService,
+              GuardService,
               UserImpressionService],
   bootstrap: [AppComponent]
 })

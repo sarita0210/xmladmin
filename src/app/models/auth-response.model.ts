@@ -1,3 +1,3 @@
 export class AuthResponse {
-  constructor(public access_token: string, public Roles: Array<string>) {}
+  constructor(public token: string, public roles: Array<string>, public username: string) {}
 }

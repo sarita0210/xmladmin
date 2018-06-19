@@ -17,7 +17,10 @@ export class HeaderComponent implements OnInit {
   }
 
   
-  logout(event) {
+  logout() {
     this.auth.logout();
+  }
+  isLoggedIn() {
+    return this.auth.isLoggedInSimple();
   }
 }

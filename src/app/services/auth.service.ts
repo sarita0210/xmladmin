@@ -14,11 +14,10 @@ import { AuthenticationRequest } from '../models/authentication-request';
 
 @Injectable()
 export class AuthService {
-  private logger = new Subject<boolean>();
   baseUrl = 'http://localhost:8085/';
   apiUrl = 'api/users/';
   loggedUserToken: Token;
-  public authResponse: AuthResponse;
+  private authResponse: AuthResponse;
   constructor(private http: HttpClient, private router: Router) { 
     this.loggedUserToken = new Token('', '', '', 0, '');
   }
@@ -28,17 +27,17 @@ export class AuthService {
     if (this.authResponse == null) {
       return null;
     }
-    return this.authResponse.access_token;
+    return this.authResponse.token;
   }
-  getRole(): Array<string> {
+  getRoles(): Array<string> {
     this.authResponse = JSON.parse(window.localStorage.getItem('currentUser'));
     if (this.authResponse == null) {
       return null;
     }
-    return this.authResponse.Roles;
+    return this.authResponse.roles;
   }
   isRole(role: string): boolean {
-    return this.getRole().indexOf(role) !== -1;
+    return this.getRoles().indexOf(role) !== -1;
   }
   isLoggedIn(): boolean {
     this.authResponse = JSON.parse(window.localStorage.getItem('currentUser'));
@@ -60,41 +59,38 @@ export class AuthService {
     window.localStorage.clear();
     this.loggedUserToken = null;
     this.router.navigate(['/home']);
-    this.logger.next(false);
   }
   login(loginInfo: AuthenticationRequest) {
     return this.http.post(this.baseUrl + 'api/auth/login', loginInfo)
-    .map(ret => {
-      this.loggedUserToken =  new Token(ret['roles'], ret['privileges'], loginInfo.username, ret['id'], ret['token']);
-      this.storeToken();
-      this.logger.next(true);
-    });
+    .map(ret => ret as AuthResponse);
   //  const formData: FormData = new FormData();
     // const body = `username=$username}&password=${password}&`;
    // return this.http.post(this.baseUrl + this.apiUrl + 'token', {username: username, password: password})
   //    .map(res => res as AuthResponse || {}).catch(this.handleError);
   }
   hasRole(role: string): boolean {
-    if (this.getRole() == null) {
+    if (this.getRoles() == null) {
       return false;
     } else {
-      return this.getRole().indexOf(role) !== -1;
+      return this.getRoles().indexOf(role) !== -1;
     }
   }
-  storeToken() {
+  storeToken(authResponse: AuthResponse) {
+    console.log(authResponse);
+    this.authResponse = authResponse;
     window.localStorage.setItem('currentUser', JSON.stringify(this.authResponse));
   }
   getJSONAuthHeader(): HttpHeaders {
-    return new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this.authResponse.access_token});
+    return new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this.getToken()});
   }
   getFORMHeader(): HttpHeaders {
     return new HttpHeaders({'Content-Type' : 'application/x-www-form-urlencoded'});
   }
   getAuthHeader(): HttpHeaders {
-    return new HttpHeaders({'Authorization': 'Bearer ' + this.authResponse.access_token});
+    return new HttpHeaders({'Authorization': 'Bearer ' + this.getToken()});
   }
   getAuthHeaderMultipart(): HttpHeaders {
-    return new HttpHeaders({'Authorization': 'Bearer ' + this.authResponse.access_token});
+    return new HttpHeaders({'Authorization': 'Bearer ' + this.getToken()});
   }
   register(user: RegisterModel) {
     return this.http.post(this.baseUrl + this.apiUrl + 'register', user).map(this.extractUser).catch(this.handleError);
@@ -118,7 +114,7 @@ export class AuthService {
     return Observable.throw(errMsg);
   }
 
-  isLoggedInSimple(): boolean {
+  public isLoggedInSimple(): boolean {
     return this.getToken() !== null;
   }
 

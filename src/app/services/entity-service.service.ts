@@ -16,7 +16,7 @@ export class EntityService <Entity, Key> {
     let params = new HttpParams();
     params = params.append('page', page.toString());
     params = params.append('size', pageSize.toString());
-    return this.http.get(this.actionUrl + '/all', {params})
+    return this.http.get(this.actionUrl + '/all', {headers: this.authService.getJSONAuthHeader(), params})
       .map(resp => resp as Page<Entity>);
   }
   getOne(id: Key): Observable<any> {
@@ -24,16 +24,16 @@ export class EntityService <Entity, Key> {
       .map(resp => resp as Entity);
   }
   insert(toInsert: any): Observable<Entity> {
-    return this.http.post(this.actionUrl + '/insert', toInsert)
+    return this.http.post(this.actionUrl + '/insert', toInsert, {headers: this.authService.getJSONAuthHeader()})
       .map(resp => resp as Entity);
   }
   delete(id: Key): Observable<any> {
     let params = new HttpParams();
     params = params.append('id', id.toString());
-    return this.http.delete(this.actionUrl + '/delete', {params: params} ).map(resp => resp as Entity);
+    return this.http.delete(this.actionUrl + '/delete', {headers: this.authService.getJSONAuthHeader(), params: params} ).map(resp => resp as Entity);
   }
   update(toUpdate: any): Observable<any> {
-    return this.http.put(this.actionUrl + '/update/', toUpdate);
+    return this.http.put(this.actionUrl + '/update/', toUpdate, {headers: this.authService.getJSONAuthHeader()});
   }
 
 }
