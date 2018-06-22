@@ -7,7 +7,7 @@ import { Page } from '../models/page.model';
 
 @Injectable()
 export class EntityService <Entity, Key> {
-  actionUrl = 'http://localhost:8085/api';
+  actionUrl = 'https://warm-badlands-25076.herokuapp.com/api';
 
   constructor(protected http: HttpClient, protected url: string, protected authService: AuthService) {
     this.actionUrl = this.actionUrl + url;

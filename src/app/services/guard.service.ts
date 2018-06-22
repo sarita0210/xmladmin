@@ -12,7 +12,7 @@ export class GuardService implements CanActivate {
 
   canActivate() {
     const isLogged = this.service.isLoggedInSimple();
-    const hasRights = this.service.hasRole('admin');
+    const hasRights = this.service.hasRole('ROLE_admin');
 
     if (!isLogged || !hasRights) {
       this.router.navigate(['/login']);

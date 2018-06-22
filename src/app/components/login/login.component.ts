@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
   login() {
     this.authService.login(new AuthenticationRequest(this.form.value.username, this.form.value.password)).subscribe(
       (resp: AuthResponse) => {
-        if(resp.roles === undefined || resp.roles.findIndex(r=> r==='admin') === -1) {
+        if(resp.roles === undefined || resp.roles.findIndex(r=> r === 'ROLE_admin') === -1) {
           this.error = 'Korisnik nije administrator';
           return;
         }

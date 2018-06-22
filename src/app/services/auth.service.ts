@@ -14,7 +14,7 @@ import { AuthenticationRequest } from '../models/authentication-request';
 
 @Injectable()
 export class AuthService {
-  baseUrl = 'http://localhost:8085/';
+  baseUrl = 'https://warm-badlands-25076.herokuapp.com/';
   apiUrl = 'api/users/';
   loggedUserToken: Token;
   private authResponse: AuthResponse;
