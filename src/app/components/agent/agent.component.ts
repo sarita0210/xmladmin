@@ -11,18 +11,21 @@ import { AgentService } from '../../services/agent.service';
 })
 export class AgentComponent extends Pagination<AgentUserModel>  implements OnInit {
 
-  firstName ='';
+  firstName = '';
   lastName = '';
   email = '';
   username = '';
   registrationDate = '';
   verified = false;
   pib = '';
+  public barLabel = 'Password strength:';
+  public myColors = ['#DD2C00', '#FF6D00', '#FFD600', '#AEEA00', '#00C853'];
+  public strengthLabels = ['(Useless)', '(Weak)', '(Normal)', '(Strong)', '(Great!)'];
   selected: AgentUserModel;
   @ViewChild('addForm') form: NgForm;
   @ViewChild('editForm') eForm: NgForm;
 
-  constructor(public agentService: AgentService) { 
+  constructor(public agentService: AgentService) {
     super(agentService);
   }
 
