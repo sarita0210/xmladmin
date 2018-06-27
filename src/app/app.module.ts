@@ -25,6 +25,7 @@ import { UserService } from './services/user.service';
 import { UserImpressionService } from './services/user-impression';
 import { LoginComponent } from './components/login/login.component';
 import { GuardService } from './services/guard.service';
+import { PasswordStrengthBarModule } from 'ng2-password-strength-bar';
 
 
 @NgModule({
@@ -46,9 +47,10 @@ import { GuardService } from './services/guard.service';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    PasswordStrengthBarModule,
     FormsModule
   ],
-  providers: [AuthService, 
+  providers: [AuthService,
               CategoryEntityService,
               EntityService,
               ServicesEntityService,

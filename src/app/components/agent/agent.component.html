@@ -124,8 +124,15 @@
           <div class="form-group">
             <label for="password" class="col-sm-2 control-label"> Password: </label>
             <div class="col-sm-8">
-              <input type="password" ngModel #username="ngModel" name="password" class="form-control" id="password">
+              <input type="password" ngModel #password="ngModel"
+                     minlength="5" maxlength="50" name="password" class="form-control" id="password">
             </div>
+            <ng2-password-strength-bar
+              [passwordToCheck]="password.value"
+              [barLabel]="barLabel"
+              [barColors]="myColors"
+              [strengthLabels]="strengthLabels">
+            </ng2-password-strength-bar>
           </div>
 
 
